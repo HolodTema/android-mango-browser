@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebSettings
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.terabyte.mangobrowser.R
@@ -26,12 +27,7 @@ class WebFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentWebBinding.inflate(inflater, container, false)
-
-        binding.webView.apply {
-            webViewClient = CustomWebViewClient()
-            settings.javaScriptEnabled = true
-        }
-
+        configureWebView()
         return binding.root
     }
 
@@ -81,6 +77,45 @@ class WebFragment : Fragment() {
         viewModel.liveDataCurrentWebUrl.observe(viewLifecycleOwner) {
             binding.editWebRequest.setText(it)
             binding.webView.loadUrl(it)
+        }
+    }
+
+    private fun configureWebView() {
+        val webClient = CustomWebViewClient(
+            pageStartedListener = {
+                binding.progressWebLoading.visibility = View.VISIBLE
+                binding.progressWebLoading.alpha = 0f
+                binding.progressWebLoading.progress = 100
+                binding.progressWebLoading.animate()
+                    .alpha(1f)
+                    .setDuration(300)
+                    .start()
+            },
+            pageFinishedListener = {
+                binding.progressWebLoading.animate()
+                    .alpha(0f)
+                    .setDuration(300)
+                    .withEndAction {
+                        binding.progressWebLoading.visibility = View.INVISIBLE
+                        binding.progressWebLoading.progress = 0
+                    }
+                    .start()
+            }
+        )
+
+        binding.webView.apply {
+            webViewClient = webClient
+            scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
+
+            settings.javaScriptEnabled = true
+            settings.loadsImagesAutomatically = true
+            settings.cacheMode = WebSettings.LOAD_DEFAULT
+            settings.useWideViewPort = true
+            settings.loadWithOverviewMode = true
+            settings.displayZoomControls = false
+            settings.builtInZoomControls = true
+            settings.setSupportZoom(true)
+            settings.domStorageEnabled = true
         }
     }
 

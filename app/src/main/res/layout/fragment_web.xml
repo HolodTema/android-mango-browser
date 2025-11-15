@@ -83,11 +83,11 @@
         android:id="@+id/edit_web_request"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:textSize="14sp"
         android:padding="4dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
         android:autofillHints=""
         android:background="@drawable/background_edit_web_request"
         android:inputType="textUri"
@@ -95,13 +95,27 @@
         app:layout_constraintStart_toEndOf="@+id/button_add_to_favorites"
         app:layout_constraintTop_toBottomOf="@+id/button_settings" />
 
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/progress_web_download"
+        android:indeterminate="false"
+        android:max="100"
+        android:progress="0"
+        android:visibility="invisible"
+        android:layout_marginTop="4dp"
+        android:id="@+id/progress_web_loading"
+        app:layout_constraintTop_toBottomOf="@id/edit_web_request" />
+
+
 
     <WebView
         android:id="@+id/web_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_web_request" />
+        app:layout_constraintTop_toBottomOf="@+id/progress_web_loading" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
