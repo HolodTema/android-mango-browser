@@ -19,4 +19,8 @@ class MainViewModel : ViewModel() {
         _liveDataCurrentFragmentLayout.value = layoutId
     }
 
+    fun setWebUrl(url: String) {
+        _liveDataCurrentWebUrl.value = url
+    }
+
 }

@@ -1,6 +1,8 @@
 package com.terabyte.mangobrowser.fragment
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,8 +29,9 @@ class WebFragment : Fragment() {
 
         binding.webView.apply {
             webViewClient = CustomWebViewClient()
+            settings.javaScriptEnabled = true
         }
-        
+
         return binding.root
     }
 
@@ -37,8 +40,44 @@ class WebFragment : Fragment() {
         binding.buttonSettings.setOnClickListener {
             viewModel.setFragment(R.layout.fragment_settings)
         }
+        binding.buttonOpenedTabs.setOnClickListener {
+            viewModel.setFragment(R.layout.fragment_opened_tabs)
+        }
+        binding.buttonFavoriteTabs.setOnClickListener {
+            viewModel.setFragment(R.layout.fragment_favorite_tabs)
+        }
+
+        binding.buttonSearch.setOnClickListener {
+            val url = binding.editWebRequest.text.toString()
+            viewModel.setWebUrl(url)
+        }
+
+        binding.editWebRequest.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+            override fun beforeTextChanged(
+                s: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+
+            }
+
+            override fun onTextChanged(
+                s: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int
+            ) {
+                binding.buttonSearch.isEnabled = s != null && s.isNotBlank()
+            }
+        })
 
         viewModel.liveDataCurrentWebUrl.observe(viewLifecycleOwner) {
+            binding.editWebRequest.setText(it)
             binding.webView.loadUrl(it)
         }
     }

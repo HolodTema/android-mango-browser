@@ -2,4 +2,7 @@
     <string name="app_name">MangoBrowser</string>
     <string name="settings">settings</string>
     <string name="add_new_tab">Add new tab</string>
+    <string name="back">back</string>
+    <string name="opened_tabs">opened tabs</string>
+    <string name="favorite_tabs">favourite tabs</string>
 </resources>
