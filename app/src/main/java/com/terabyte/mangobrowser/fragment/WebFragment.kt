@@ -49,7 +49,9 @@ class WebFragment : Fragment() {
 
         binding.buttonSearch.setOnClickListener {
             val url = binding.editWebRequest.text.toString()
-            viewModel.setWebUrl(url)
+            if (viewModel.liveDataCurrentWebUrl.value != url) {
+                viewModel.setWebUrl(url)
+            }
         }
 
         binding.editWebRequest.addTextChangedListener(object : TextWatcher {

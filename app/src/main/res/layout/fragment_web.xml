@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/orange">
 
     <ImageButton
         android:id="@+id/button_settings"
@@ -10,10 +11,12 @@
         android:layout_height="24dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="@android:color/transparent"
         android:contentDescription="@string/settings"
         android:src="@drawable/ic_settings"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white" />
 
     <ImageButton
         android:id="@+id/button_new_tab"
@@ -21,10 +24,12 @@
         android:layout_height="24dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:background="@android:color/transparent"
         android:contentDescription="@string/add_new_tab"
         android:src="@drawable/ic_new_tab"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white" />
 
     <ImageButton
         android:id="@+id/button_opened_tabs"
@@ -32,9 +37,11 @@
         android:layout_height="24dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        android:background="@android:color/transparent"
         android:src="@drawable/ic_opened_tabs"
         app:layout_constraintEnd_toStartOf="@+id/button_new_tab"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white" />
 
     <ImageButton
         android:id="@+id/button_favorite_tabs"
@@ -42,19 +49,23 @@
         android:layout_height="24dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        android:background="@android:color/transparent"
         android:src="@drawable/ic_favorite_tabs"
         app:layout_constraintEnd_toStartOf="@+id/button_opened_tabs"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white" />
 
     <ImageButton
         android:id="@+id/button_search"
         android:layout_width="24dp"
         android:layout_height="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:background="@android:color/transparent"
         android:src="@drawable/ic_search"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_settings"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"/>
+        app:tint="@color/white" />
 
     <ImageButton
         android:id="@+id/button_add_to_favorites"
@@ -62,18 +73,23 @@
         android:layout_height="24dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
+        android:background="@android:color/transparent"
         android:src="@drawable/ic_add_to_favorites"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_settings" />
+        app:layout_constraintTop_toBottomOf="@+id/button_settings"
+        app:tint="@color/white" />
 
     <EditText
         android:id="@+id/edit_web_request"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:textSize="14sp"
+        android:padding="4dp"
+        android:layout_marginEnd="16dp"
         android:autofillHints=""
+        android:background="@drawable/background_edit_web_request"
         android:inputType="textUri"
         app:layout_constraintEnd_toStartOf="@+id/button_search"
         app:layout_constraintStart_toEndOf="@+id/button_add_to_favorites"
@@ -84,6 +100,7 @@
         android:id="@+id/web_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_web_request" />
 

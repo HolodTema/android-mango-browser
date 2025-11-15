@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MangoBrowser</string>
+    <string name="app_name">Mango Browser</string>
     <string name="settings">settings</string>
     <string name="add_new_tab">Add new tab</string>
     <string name="back">back</string>
