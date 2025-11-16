@@ -4,7 +4,7 @@
     <string name="add_new_tab">Add new tab</string>
     <string name="back">back</string>
     <string name="opened_tabs">opened tabs</string>
-    <string name="favorite_tabs">favourite tabs</string>
+    <string name="favorite_tabs">favorite tabs</string>
     <string name="try_again">Try again</string>
     <string name="cannot_open_the_site">Cannot open the site</string>
     <string name="check_your_internet_connection">Check your Internet connection...</string>
@@ -17,4 +17,5 @@
     <string name="site_name">Site name:</string>
     <string name="site_url">Site url:</string>
     <string name="add">Add</string>
+    <string name="there_are_no_favorite_tabs">There are no favorite tabs</string>
 </resources>

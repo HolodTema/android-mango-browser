@@ -1,4 +1,4 @@
-package com.terabyte.mangobrowser.fragment
+package com.terabyte.mangobrowser.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,15 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.terabyte.mangobrowser.R
-import com.terabyte.mangobrowser.databinding.FragmentFavoriteTabsBinding
 import com.terabyte.mangobrowser.databinding.FragmentOpenedTabsBinding
 import com.terabyte.mangobrowser.databinding.FragmentSettingsBinding
 import com.terabyte.mangobrowser.databinding.FragmentWebBinding
 import com.terabyte.mangobrowser.datastore.SettingsDataStore
 import com.terabyte.mangobrowser.viewmodel.MainViewModel
 
-class FavoriteTabsFragment: Fragment() {
-    private lateinit var binding: FragmentFavoriteTabsBinding
+class OpenedTabsFragment: Fragment() {
+    private lateinit var binding: FragmentOpenedTabsBinding
 
     private val viewModel: MainViewModel by lazy {
         val factory = MainViewModel.Factory(SettingsDataStore(requireActivity()))
@@ -27,7 +26,7 @@ class FavoriteTabsFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentFavoriteTabsBinding.inflate(inflater, container, false)
+        binding = FragmentOpenedTabsBinding.inflate(inflater, container, false)
 
         return binding.root
     }
@@ -40,8 +39,8 @@ class FavoriteTabsFragment: Fragment() {
     }
 
     companion object {
-        fun newInstance(): FavoriteTabsFragment {
-            return FavoriteTabsFragment()
+        fun newInstance(): OpenedTabsFragment {
+            return OpenedTabsFragment()
         }
     }
 }

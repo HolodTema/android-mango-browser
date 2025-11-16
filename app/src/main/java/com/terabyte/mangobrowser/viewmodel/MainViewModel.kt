@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainViewModel(private val dataStore: SettingsDataStore) : ViewModel() {
 
@@ -24,6 +25,9 @@ class MainViewModel(private val dataStore: SettingsDataStore) : ViewModel() {
 
     private val _liveDataCurrentWebUrl = MutableLiveData<String>(HomePageTypes.GOOGLE)
     val liveDataCurrentWebUrl: LiveData<String> = _liveDataCurrentWebUrl
+
+    private val _liveDataFavoriteTabs = MutableLiveData<List<FavoriteTab>>(emptyList())
+    val liveDataFavoriteTabs: LiveData<List<FavoriteTab>> = _liveDataFavoriteTabs
 
     val flowHomePage: StateFlow<String> = dataStore.flowHomePage
         .stateIn(
@@ -66,6 +70,9 @@ class MainViewModel(private val dataStore: SettingsDataStore) : ViewModel() {
 
     fun setFragment(@LayoutRes layoutId: Int) {
         _liveDataCurrentFragmentLayout.value = layoutId
+        if (layoutId == R.layout.fragment_favorite_tabs) {
+            loadFavoriteTabs()
+        }
     }
 
     fun setWebUrl(url: String) {
@@ -79,6 +86,21 @@ class MainViewModel(private val dataStore: SettingsDataStore) : ViewModel() {
                 url = tabUrl
             )
             RoomHelper.get().insertFavoriteTab(favoriteTab)
+        }
+    }
+
+    fun deleteFavoriteTab(favoriteTab: FavoriteTab) {
+        viewModelScope.launch(Dispatchers.IO) {
+            RoomHelper.get().deleteFavoriteTab(favoriteTab)
+        }
+    }
+
+    private fun loadFavoriteTabs() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val favoriteTabs = RoomHelper.get().getAllFavoriteTabs()
+            withContext(Dispatchers.Main) {
+                _liveDataFavoriteTabs.value = favoriteTabs
+            }
         }
     }
 

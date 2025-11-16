@@ -1,4 +1,4 @@
-package com.terabyte.mangobrowser.dialog
+package com.terabyte.mangobrowser.ui.dialog
 
 import android.os.Bundle
 import android.view.LayoutInflater

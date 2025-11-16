@@ -1,4 +1,4 @@
-package com.terabyte.mangobrowser.fragment
+package com.terabyte.mangobrowser.ui.fragment
 
 import android.os.Build
 import android.os.Bundle
@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.terabyte.mangobrowser.R
 import com.terabyte.mangobrowser.databinding.FragmentWebBinding
 import com.terabyte.mangobrowser.datastore.SettingsDataStore
-import com.terabyte.mangobrowser.dialog.AddFavoriteBottomSheet
+import com.terabyte.mangobrowser.ui.dialog.AddFavoriteBottomSheet
 import com.terabyte.mangobrowser.viewmodel.MainViewModel
 import com.terabyte.mangobrowser.web.CustomWebChromeClient
 import com.terabyte.mangobrowser.web.CustomWebViewClient

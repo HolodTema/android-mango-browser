@@ -1,4 +1,4 @@
-package com.terabyte.mangobrowser.fragment
+package com.terabyte.mangobrowser.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

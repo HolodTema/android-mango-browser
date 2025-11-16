@@ -1,18 +1,15 @@
 package com.terabyte.mangobrowser.activity
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import com.terabyte.mangobrowser.R
 import com.terabyte.mangobrowser.databinding.ActivityMainBinding
 import com.terabyte.mangobrowser.datastore.SettingsDataStore
-import com.terabyte.mangobrowser.fragment.FavoriteTabsFragment
-import com.terabyte.mangobrowser.fragment.OpenedTabsFragment
-import com.terabyte.mangobrowser.fragment.SettingsFragment
-import com.terabyte.mangobrowser.fragment.WebFragment
+import com.terabyte.mangobrowser.ui.fragment.FavoriteTabsFragment
+import com.terabyte.mangobrowser.ui.fragment.OpenedTabsFragment
+import com.terabyte.mangobrowser.ui.fragment.SettingsFragment
+import com.terabyte.mangobrowser.ui.fragment.WebFragment
 import com.terabyte.mangobrowser.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
