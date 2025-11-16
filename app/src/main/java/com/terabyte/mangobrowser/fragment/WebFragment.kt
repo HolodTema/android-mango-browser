@@ -1,5 +1,6 @@
 package com.terabyte.mangobrowser.fragment
 
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,9 +10,11 @@ import android.view.ViewGroup
 import android.webkit.WebSettings
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.terabyte.mangobrowser.DEFAULT_WEB_URL
 import com.terabyte.mangobrowser.R
 import com.terabyte.mangobrowser.databinding.FragmentWebBinding
 import com.terabyte.mangobrowser.viewmodel.MainViewModel
+import com.terabyte.mangobrowser.web.CustomWebChromeClient
 import com.terabyte.mangobrowser.web.CustomWebViewClient
 
 class WebFragment : Fragment() {
@@ -43,16 +46,25 @@ class WebFragment : Fragment() {
             viewModel.setFragment(R.layout.fragment_favorite_tabs)
         }
 
+        binding.buttonClearEditWebRequest.setOnClickListener {
+            binding.editWebRequest.setText("")
+        }
+
         binding.buttonSearch.setOnClickListener {
             val url = binding.editWebRequest.text.toString()
             if (viewModel.liveDataCurrentWebUrl.value != url) {
-                viewModel.setWebUrl(url)
+                binding.webView.loadUrl(url)
             }
+        }
+
+        binding.buttonErrorConnectAgain.setOnClickListener {
+            val url = binding.editWebRequest.text.toString()
+            binding.webView.loadUrl(url)
+            hideNoInternetUI()
         }
 
         binding.editWebRequest.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-
             }
 
             override fun beforeTextChanged(
@@ -61,7 +73,6 @@ class WebFragment : Fragment() {
                 count: Int,
                 after: Int
             ) {
-
             }
 
             override fun onTextChanged(
@@ -73,15 +84,23 @@ class WebFragment : Fragment() {
                 binding.buttonSearch.isEnabled = s != null && s.isNotBlank()
             }
         })
+        binding.editWebRequest.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                binding.buttonAddToFavorites.visibility = View.INVISIBLE
+                binding.buttonClearEditWebRequest.visibility = View.VISIBLE
+            } else {
+                binding.buttonAddToFavorites.visibility = View.VISIBLE
+                binding.buttonClearEditWebRequest.visibility = View.GONE
+            }
+        }
 
         viewModel.liveDataCurrentWebUrl.observe(viewLifecycleOwner) {
             binding.editWebRequest.setText(it)
-            binding.webView.loadUrl(it)
         }
     }
 
     private fun configureWebView() {
-        val webClient = CustomWebViewClient(
+        val webViewClient = CustomWebViewClient(
             pageStartedListener = {
                 binding.progressWebLoading.visibility = View.VISIBLE
                 binding.progressWebLoading.alpha = 0f
@@ -91,7 +110,11 @@ class WebFragment : Fragment() {
                     .setDuration(300)
                     .start()
             },
-            pageFinishedListener = {
+            pageFinishedListener = { strUrl ->
+                strUrl?.let {
+                    viewModel.setWebUrl(strUrl)
+                }
+
                 binding.progressWebLoading.animate()
                     .alpha(0f)
                     .setDuration(300)
@@ -100,13 +123,22 @@ class WebFragment : Fragment() {
                         binding.progressWebLoading.progress = 0
                     }
                     .start()
+            },
+            noInternetListener = { errorCode ->
+                showNoInternetUI()
+            }
+        )
+
+        val webChromeClient = CustomWebChromeClient(
+            progressChangedListener = {
+                binding.progressWebLoading.progress = it
             }
         )
 
         binding.webView.apply {
-            webViewClient = webClient
+            this.webViewClient = webViewClient
+            this.webChromeClient = webChromeClient
             scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
-
             settings.javaScriptEnabled = true
             settings.loadsImagesAutomatically = true
             settings.cacheMode = WebSettings.LOAD_DEFAULT
@@ -116,7 +148,27 @@ class WebFragment : Fragment() {
             settings.builtInZoomControls = true
             settings.setSupportZoom(true)
             settings.domStorageEnabled = true
+
+            settings.userAgentString = "Mozilla/5.0 (Linux; Android 10; " +
+                    Build.MODEL + ") AppleWebKit/537.36 (KHTML, like Gecko) " +
+                    "Chrome/91.0.4472.120 Mobile Safari/537.36"
+
+            loadUrl(viewModel.liveDataCurrentWebUrl.value ?: DEFAULT_WEB_URL)
         }
+    }
+
+    private fun showNoInternetUI() {
+        binding.webView.visibility = View.GONE
+        binding.textWebErrorHeader.visibility = View.VISIBLE
+        binding.textWebErrorDescription.visibility = View.VISIBLE
+        binding.buttonErrorConnectAgain.visibility = View.VISIBLE
+    }
+
+    private fun hideNoInternetUI() {
+        binding.webView.visibility = View.VISIBLE
+        binding.textWebErrorHeader.visibility = View.GONE
+        binding.textWebErrorDescription.visibility = View.GONE
+        binding.buttonErrorConnectAgain.visibility = View.GONE
     }
 
     companion object {

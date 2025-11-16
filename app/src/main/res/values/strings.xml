@@ -5,4 +5,7 @@
     <string name="back">back</string>
     <string name="opened_tabs">opened tabs</string>
     <string name="favorite_tabs">favourite tabs</string>
+    <string name="try_again">Try again</string>
+    <string name="cannot_open_the_site">Cannot open the site</string>
+    <string name="check_your_internet_connection">Check your Internet connection...</string>
 </resources>
