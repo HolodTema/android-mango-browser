@@ -1,5 +1,6 @@
 package com.terabyte.mangobrowser.ui.fragment
 
+import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import android.webkit.WebSettings
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.terabyte.mangobrowser.R
 import com.terabyte.mangobrowser.databinding.FragmentWebBinding
 import com.terabyte.mangobrowser.datastore.SettingsDataStore
@@ -17,6 +19,7 @@ import com.terabyte.mangobrowser.ui.dialog.AddFavoriteBottomSheet
 import com.terabyte.mangobrowser.viewmodel.MainViewModel
 import com.terabyte.mangobrowser.web.CustomWebChromeClient
 import com.terabyte.mangobrowser.web.CustomWebViewClient
+import kotlinx.coroutines.launch
 
 class WebFragment : Fragment() {
     private lateinit var binding: FragmentWebBinding
@@ -102,11 +105,17 @@ class WebFragment : Fragment() {
 
         binding.buttonAddToFavorites.setOnClickListener {
             val bottomSheet = AddFavoriteBottomSheet.newInstance()
+            bottomSheet.setFavoriteTabAddedListener {
+                binding.buttonAddToFavorites.isEnabled = false
+            }
             bottomSheet.show(requireActivity().supportFragmentManager, AddFavoriteBottomSheet.FRAGMENT_TAG)
         }
 
         viewModel.liveDataCurrentWebUrl.observe(viewLifecycleOwner) {
             binding.editWebRequest.setText(it)
+            viewModel.checkCurrentUrlInFavorites {
+                binding.buttonAddToFavorites.isEnabled = !it
+            }
         }
     }
 

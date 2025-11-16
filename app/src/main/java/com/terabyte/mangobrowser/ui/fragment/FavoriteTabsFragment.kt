@@ -63,7 +63,6 @@ class FavoriteTabsFragment: Fragment(), FavoriteTabItemCallbacks {
 
     override fun onFavoriteTabDelete(favoriteTab: FavoriteTab) {
         viewModel.deleteFavoriteTab(favoriteTab)
-        viewModel.setFragment(R.layout.fragment_web)
     }
 
     companion object {

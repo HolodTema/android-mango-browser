@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.terabyte.mangobrowser.R
 import com.terabyte.mangobrowser.datastore.SettingsDataStore
@@ -92,6 +93,20 @@ class MainViewModel(private val dataStore: SettingsDataStore) : ViewModel() {
     fun deleteFavoriteTab(favoriteTab: FavoriteTab) {
         viewModelScope.launch(Dispatchers.IO) {
             RoomHelper.get().deleteFavoriteTab(favoriteTab)
+            withContext(Dispatchers.Main) {
+                loadFavoriteTabs()
+            }
+        }
+    }
+
+    fun checkCurrentUrlInFavorites(listener: (Boolean)->Unit) {
+        val currentUrl = liveDataCurrentWebUrl.value
+        viewModelScope.launch(Dispatchers.Default) {
+            val favoriteTabs = RoomHelper.get().getAllFavoriteTabs()
+            val isFavoriteTabFound = favoriteTabs.find { it.url == currentUrl } != null
+            withContext(Dispatchers.Main) {
+                listener(isFavoriteTabFound)
+            }
         }
     }
 

@@ -9,9 +9,13 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.terabyte.mangobrowser.databinding.BottomSheetAddFavoriteBinding
 import com.terabyte.mangobrowser.datastore.SettingsDataStore
 import com.terabyte.mangobrowser.viewmodel.MainViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 
-class AddFavoriteBottomSheet : BottomSheetDialogFragment() {
+class AddFavoriteBottomSheet :
+    BottomSheetDialogFragment() {
     private lateinit var binding: BottomSheetAddFavoriteBinding
+
+    private lateinit var favoriteTabAddedListener: ()->Unit
 
     private val viewModel: MainViewModel by lazy {
         val factory = MainViewModel.Factory(SettingsDataStore(requireActivity()))
@@ -37,14 +41,20 @@ class AddFavoriteBottomSheet : BottomSheetDialogFragment() {
         binding.buttonAddToFavorites.setOnClickListener {
             val name = binding.editSiteName.text.toString()
             viewModel.addTabToFavorites(name, binding.textSiteUrl.text.toString())
+            favoriteTabAddedListener()
             dismiss()
         }
+    }
+
+    fun setFavoriteTabAddedListener(listener: ()->Unit) {
+        favoriteTabAddedListener = listener
     }
 
     companion object {
         const val FRAGMENT_TAG = "AddFavoriteBottomSheet"
 
         fun newInstance(): AddFavoriteBottomSheet {
+            val bundle = Bundle()
             return AddFavoriteBottomSheet()
         }
     }
