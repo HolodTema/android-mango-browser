@@ -8,7 +8,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.terabyte.mangobrowser.R
 import com.terabyte.mangobrowser.datastore.SettingsDataStore
+import com.terabyte.mangobrowser.db.FavoriteTab
+import com.terabyte.mangobrowser.db.RoomHelper
 import com.terabyte.mangobrowser.web.HomePageTypes
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
@@ -69,8 +72,18 @@ class MainViewModel(private val dataStore: SettingsDataStore) : ViewModel() {
         _liveDataCurrentWebUrl.value = url
     }
 
+    fun addTabToFavorites(tabName: String, tabUrl: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val favoriteTab = FavoriteTab(
+                name = tabName,
+                url = tabUrl
+            )
+            RoomHelper.get().insertFavoriteTab(favoriteTab)
+        }
+    }
+
     @Suppress("UNCHECKED_CAST")
-    class Factory(private val dataStore: SettingsDataStore): ViewModelProvider.Factory {
+    class Factory(private val dataStore: SettingsDataStore) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return MainViewModel(dataStore) as T
         }

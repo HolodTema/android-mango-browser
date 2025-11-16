@@ -8,6 +8,10 @@ class RoomHelper private constructor(context: Context) {
     val db = Room.databaseBuilder(context, AppDatabase::class.java, ROOM_DB_NAME)
         .build()
 
+    suspend fun insertFavoriteTab(favoriteTab: FavoriteTab) {
+        db.favoriteTabDao().insert(favoriteTab)
+    }
+
     companion object {
         private lateinit var instance: RoomHelper
 

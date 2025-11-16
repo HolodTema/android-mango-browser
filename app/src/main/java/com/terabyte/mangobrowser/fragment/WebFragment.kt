@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.terabyte.mangobrowser.R
 import com.terabyte.mangobrowser.databinding.FragmentWebBinding
 import com.terabyte.mangobrowser.datastore.SettingsDataStore
+import com.terabyte.mangobrowser.dialog.AddFavoriteBottomSheet
 import com.terabyte.mangobrowser.viewmodel.MainViewModel
 import com.terabyte.mangobrowser.web.CustomWebChromeClient
 import com.terabyte.mangobrowser.web.CustomWebViewClient
@@ -97,6 +98,11 @@ class WebFragment : Fragment() {
 
         binding.buttonHomePage.setOnClickListener {
             binding.webView.loadUrl(viewModel.flowHomePage.value)
+        }
+
+        binding.buttonAddToFavorites.setOnClickListener {
+            val bottomSheet = AddFavoriteBottomSheet.newInstance()
+            bottomSheet.show(requireActivity().supportFragmentManager, AddFavoriteBottomSheet.FRAGMENT_TAG)
         }
 
         viewModel.liveDataCurrentWebUrl.observe(viewLifecycleOwner) {
