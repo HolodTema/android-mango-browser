@@ -20,19 +20,6 @@
         app:tint="@color/white" />
 
     <ImageButton
-        android:id="@+id/button_new_tab"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/add_new_tab"
-        android:src="@drawable/ic_new_tab"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/white" />
-
-    <ImageButton
         android:id="@+id/button_opened_tabs"
         android:layout_width="24dp"
         android:layout_height="24dp"
@@ -40,7 +27,7 @@
         android:layout_marginEnd="16dp"
         android:background="@android:color/transparent"
         android:src="@drawable/ic_opened_tabs"
-        app:layout_constraintEnd_toStartOf="@+id/button_new_tab"
+        app:layout_constraintEnd_toStartOf="@+id/button_home_page"
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/white" />
 
@@ -53,6 +40,18 @@
         android:background="@android:color/transparent"
         android:src="@drawable/ic_favorite_tabs"
         app:layout_constraintEnd_toStartOf="@+id/button_opened_tabs"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white" />
+
+    <ImageButton
+        android:id="@+id/button_home_page"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_home_page"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/white" />
 

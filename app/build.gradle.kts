@@ -40,6 +40,12 @@ android {
 }
 
 dependencies {
+    //ViewModel for kotlin
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+
+    //DataStore
+    implementation(libs.androidx.datastore.preferences)
+
     //room local DB
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)

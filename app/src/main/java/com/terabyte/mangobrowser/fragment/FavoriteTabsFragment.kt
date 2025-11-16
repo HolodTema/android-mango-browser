@@ -11,13 +11,15 @@ import com.terabyte.mangobrowser.databinding.FragmentFavoriteTabsBinding
 import com.terabyte.mangobrowser.databinding.FragmentOpenedTabsBinding
 import com.terabyte.mangobrowser.databinding.FragmentSettingsBinding
 import com.terabyte.mangobrowser.databinding.FragmentWebBinding
+import com.terabyte.mangobrowser.datastore.SettingsDataStore
 import com.terabyte.mangobrowser.viewmodel.MainViewModel
 
 class FavoriteTabsFragment: Fragment() {
     private lateinit var binding: FragmentFavoriteTabsBinding
 
     private val viewModel: MainViewModel by lazy {
-        ViewModelProvider(requireActivity())[MainViewModel::class.java]
+        val factory = MainViewModel.Factory(SettingsDataStore(requireActivity()))
+        ViewModelProvider(requireActivity(), factory)[MainViewModel::class.java]
     }
 
     override fun onCreateView(

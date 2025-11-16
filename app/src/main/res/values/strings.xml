@@ -8,4 +8,9 @@
     <string name="try_again">Try again</string>
     <string name="cannot_open_the_site">Cannot open the site</string>
     <string name="check_your_internet_connection">Check your Internet connection...</string>
+    <string name="home_page">Home page:</string>
+    <string name="dark_theme">Dark theme:</string>
+    <string name="use_js">Use JavaScript:</string>
+    <string name="about_app_caption">About app:</string>
+    <string name="about_app">"Mango browser is a simple native Android browser based on Android WebView. \nActually it was developed to be a small pet project. \n\nI am sure this app contains lots of bugs. You can see the source code of the Mango Browser here: "</string>
 </resources>

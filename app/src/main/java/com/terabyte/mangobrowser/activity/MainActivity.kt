@@ -8,6 +8,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import com.terabyte.mangobrowser.R
 import com.terabyte.mangobrowser.databinding.ActivityMainBinding
+import com.terabyte.mangobrowser.datastore.SettingsDataStore
 import com.terabyte.mangobrowser.fragment.FavoriteTabsFragment
 import com.terabyte.mangobrowser.fragment.OpenedTabsFragment
 import com.terabyte.mangobrowser.fragment.SettingsFragment
@@ -16,7 +17,8 @@ import com.terabyte.mangobrowser.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by lazy {
-        ViewModelProvider(this)[MainViewModel::class.java]
+        val factory = MainViewModel.Factory(SettingsDataStore(this))
+        ViewModelProvider(this, factory)[MainViewModel::class.java]
     }
 
     private lateinit var binding: ActivityMainBinding

@@ -10,9 +10,9 @@ import android.view.ViewGroup
 import android.webkit.WebSettings
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.terabyte.mangobrowser.DEFAULT_WEB_URL
 import com.terabyte.mangobrowser.R
 import com.terabyte.mangobrowser.databinding.FragmentWebBinding
+import com.terabyte.mangobrowser.datastore.SettingsDataStore
 import com.terabyte.mangobrowser.viewmodel.MainViewModel
 import com.terabyte.mangobrowser.web.CustomWebChromeClient
 import com.terabyte.mangobrowser.web.CustomWebViewClient
@@ -21,7 +21,8 @@ class WebFragment : Fragment() {
     private lateinit var binding: FragmentWebBinding
 
     private val viewModel: MainViewModel by lazy {
-        ViewModelProvider(requireActivity())[MainViewModel::class.java]
+        val factory = MainViewModel.Factory(SettingsDataStore(requireActivity()))
+        ViewModelProvider(requireActivity(), factory)[MainViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -94,6 +95,10 @@ class WebFragment : Fragment() {
             }
         }
 
+        binding.buttonHomePage.setOnClickListener {
+            binding.webView.loadUrl(viewModel.flowHomePage.value)
+        }
+
         viewModel.liveDataCurrentWebUrl.observe(viewLifecycleOwner) {
             binding.editWebRequest.setText(it)
         }
@@ -139,7 +144,9 @@ class WebFragment : Fragment() {
             this.webViewClient = webViewClient
             this.webChromeClient = webChromeClient
             scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
-            settings.javaScriptEnabled = true
+
+            settings.javaScriptEnabled = viewModel.flowUseJS.value
+
             settings.loadsImagesAutomatically = true
             settings.cacheMode = WebSettings.LOAD_DEFAULT
             settings.useWideViewPort = true
@@ -153,7 +160,7 @@ class WebFragment : Fragment() {
                     Build.MODEL + ") AppleWebKit/537.36 (KHTML, like Gecko) " +
                     "Chrome/91.0.4472.120 Mobile Safari/537.36"
 
-            loadUrl(viewModel.liveDataCurrentWebUrl.value ?: DEFAULT_WEB_URL)
+            loadUrl(viewModel.liveDataCurrentWebUrl.value ?: viewModel.flowHomePage.value)
         }
     }
 

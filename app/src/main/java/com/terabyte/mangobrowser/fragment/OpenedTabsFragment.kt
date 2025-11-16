@@ -10,13 +10,15 @@ import com.terabyte.mangobrowser.R
 import com.terabyte.mangobrowser.databinding.FragmentOpenedTabsBinding
 import com.terabyte.mangobrowser.databinding.FragmentSettingsBinding
 import com.terabyte.mangobrowser.databinding.FragmentWebBinding
+import com.terabyte.mangobrowser.datastore.SettingsDataStore
 import com.terabyte.mangobrowser.viewmodel.MainViewModel
 
 class OpenedTabsFragment: Fragment() {
     private lateinit var binding: FragmentOpenedTabsBinding
 
     private val viewModel: MainViewModel by lazy {
-        ViewModelProvider(requireActivity())[MainViewModel::class.java]
+        val factory = MainViewModel.Factory(SettingsDataStore(requireActivity()))
+        ViewModelProvider(requireActivity(), factory)[MainViewModel::class.java]
     }
 
     override fun onCreateView(
