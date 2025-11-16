@@ -1,6 +1,5 @@
 package com.terabyte.mangobrowser.ui.fragment
 
-import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
@@ -11,7 +10,6 @@ import android.view.ViewGroup
 import android.webkit.WebSettings
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.terabyte.mangobrowser.R
 import com.terabyte.mangobrowser.databinding.FragmentWebBinding
 import com.terabyte.mangobrowser.datastore.SettingsDataStore
@@ -19,7 +17,6 @@ import com.terabyte.mangobrowser.ui.dialog.AddFavoriteBottomSheet
 import com.terabyte.mangobrowser.viewmodel.MainViewModel
 import com.terabyte.mangobrowser.web.CustomWebChromeClient
 import com.terabyte.mangobrowser.web.CustomWebViewClient
-import kotlinx.coroutines.launch
 
 class WebFragment : Fragment() {
     private lateinit var binding: FragmentWebBinding
@@ -45,7 +42,7 @@ class WebFragment : Fragment() {
             viewModel.setFragment(R.layout.fragment_settings)
         }
         binding.buttonOpenedTabs.setOnClickListener {
-            viewModel.setFragment(R.layout.fragment_opened_tabs)
+            viewModel.setFragment(R.layout.fragment_search_history)
         }
         binding.buttonFavoriteTabs.setOnClickListener {
             viewModel.setFragment(R.layout.fragment_favorite_tabs)
@@ -133,6 +130,7 @@ class WebFragment : Fragment() {
             pageFinishedListener = { strUrl ->
                 strUrl?.let {
                     viewModel.setWebUrl(strUrl)
+                    viewModel.insertHistoryTab(strUrl)
                 }
 
                 binding.progressWebLoading.animate()

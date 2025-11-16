@@ -7,7 +7,7 @@ import com.terabyte.mangobrowser.R
 import com.terabyte.mangobrowser.databinding.ActivityMainBinding
 import com.terabyte.mangobrowser.datastore.SettingsDataStore
 import com.terabyte.mangobrowser.ui.fragment.FavoriteTabsFragment
-import com.terabyte.mangobrowser.ui.fragment.OpenedTabsFragment
+import com.terabyte.mangobrowser.ui.fragment.SearchHistoryFragment
 import com.terabyte.mangobrowser.ui.fragment.SettingsFragment
 import com.terabyte.mangobrowser.ui.fragment.WebFragment
 import com.terabyte.mangobrowser.viewmodel.MainViewModel
@@ -35,8 +35,8 @@ class MainActivity : AppCompatActivity() {
                 R.layout.fragment_settings -> {
                     SettingsFragment.newInstance()
                 }
-                R.layout.fragment_opened_tabs -> {
-                    OpenedTabsFragment.newInstance()
+                R.layout.fragment_search_history -> {
+                    SearchHistoryFragment.newInstance()
                 }
                 R.layout.fragment_favorite_tabs -> {
                     FavoriteTabsFragment.newInstance()

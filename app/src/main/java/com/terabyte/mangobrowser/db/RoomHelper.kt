@@ -20,6 +20,22 @@ class RoomHelper private constructor(context: Context) {
         db.favoriteTabDao().delete(favoriteTab)
     }
 
+    suspend fun insertHistoryTab(historyTab: HistoryTab) {
+        db.historyTabDao().insert(historyTab)
+    }
+
+    suspend fun deleteHistoryTab(historyTab: HistoryTab) {
+        db.historyTabDao().delete(historyTab)
+    }
+
+    suspend fun getAllHistoryTabs(): List<HistoryTab> {
+        return db.historyTabDao().getAll()
+    }
+
+    suspend fun deleteAllHistoryTabs() {
+        db.historyTabDao().deleteAll()
+    }
+
     companion object {
         private lateinit var instance: RoomHelper
 

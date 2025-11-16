@@ -5,7 +5,6 @@ import java.util.Date
 import java.util.UUID
 
 class FavoriteTabTypeConverters {
-
     @TypeConverter
     fun fromUUID(uuid: UUID?): String? {
         return uuid?.toString()

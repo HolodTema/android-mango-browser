@@ -14,7 +14,7 @@ interface FavoriteTabItemCallbacks {
     fun onFavoriteTabClicked(favoriteTab: FavoriteTab)
 }
 
-class Holder(
+class FavoriteTabHolder(
     val binding: ListItemFavoriteTabBinding,
     private val callbacks: FavoriteTabItemCallbacks
 ) : RecyclerView.ViewHolder(binding.root) {
@@ -51,14 +51,14 @@ private class FavoriteTabDiffUtil : DiffUtil.ItemCallback<FavoriteTab>() {
 class FavoriteTabAdapter(
     private val inflater: LayoutInflater,
     private val callbacks: FavoriteTabItemCallbacks
-) : ListAdapter<FavoriteTab, Holder>(FavoriteTabDiffUtil()) {
+) : ListAdapter<FavoriteTab, FavoriteTabHolder>(FavoriteTabDiffUtil()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteTabHolder {
         val binding = ListItemFavoriteTabBinding.inflate(inflater, parent, false)
-        return Holder(binding, callbacks)
+        return FavoriteTabHolder(binding, callbacks)
     }
 
-    override fun onBindViewHolder(holder: Holder, position: Int) {
+    override fun onBindViewHolder(holder: FavoriteTabHolder, position: Int) {
         holder.bind(getItem(position))
     }
 }
