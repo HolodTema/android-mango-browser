@@ -30,8 +30,8 @@
 
     <ImageButton
         android:id="@+id/button_delete_history_tab"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:background="@android:color/transparent"
         android:src="@drawable/ic_delete_history_tab"
         app:layout_constraintBottom_toBottomOf="@+id/text_history_tab_date_time"
