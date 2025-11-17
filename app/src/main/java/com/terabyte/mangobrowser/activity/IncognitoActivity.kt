@@ -164,15 +164,14 @@ class IncognitoActivity : AppCompatActivity() {
             deepLinkListener = ::overrideDeepLink
         )
 
-//        val webChromeClient = CustomWebChromeClient(
-//            filePathCallback = ,
-//            progressChangedListener = {
-//                binding.progressWebLoading.progress = it
-//            }
-//        )
+        val webChromeClient = CustomWebChromeClient(
+            progressChangedListener = {
+                binding.progressWebLoading.progress = it
+            }
+        )
 
         binding.webView.webViewClient = webViewClient
-//        binding.webView.webChromeClient = webChromeClient
+        binding.webView.webChromeClient = webChromeClient
 
         binding.webView.settings.apply {
             cacheMode = WebSettings.LOAD_NO_CACHE
