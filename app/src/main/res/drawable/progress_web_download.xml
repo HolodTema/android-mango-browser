@@ -4,14 +4,14 @@
     <item android:id="@android:id/background">
         <shape>
             <solid
-                android:color="@color/orange"/>
+                android:color="?attr/colorPrimaryContainer"/>
         </shape>
     </item>
 
     <item android:id="@android:id/progress">
-        <clip>
+        <clip>  nj
             <shape>
-                <solid android:color="@color/white"/>
+                <solid android:color="?attr/colorOnPrimaryContainer"/>
             </shape>
         </clip>
     </item>

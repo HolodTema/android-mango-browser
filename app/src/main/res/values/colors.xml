@@ -3,4 +3,26 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="orange">#D37F00</color>
+
+    <color name="primary_light">#D37F00</color>
+    <color name="on_primary_light">#FFFFFF</color>
+    <color name="primary_container_light">#D37F00</color>
+    <color name="on_primary_container_light">#FFFFFF</color>
+
+    <color name="secondary_light">#BABABA</color>
+    <color name="on_secondary_light">#1D1D1D</color>
+    <color name="secondary_container_light">#FFFBFE</color>
+    <color name="on_secondary_container_light">#1D1D1D</color>
+
+    <color name="on_surface_light">#ffffff</color>
+
+    <color name="primary_dark">#D37F00</color>
+    <color name="on_primary_dark">#FFFFFF</color>
+    <color name="primary_container_dark">#1c1c1c</color>
+    <color name="on_primary_container_dark">#D9D9D9</color>
+
+    <color name="secondary_dark">#6D6D6D</color>
+    <color name="on_secondary_dark">#BCBCBC</color>
+    <color name="secondary_container_dark">#2c2c2c</color>
+    <color name="on_secondary_container_dark">#bcbcbc</color>
 </resources>

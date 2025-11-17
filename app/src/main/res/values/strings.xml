@@ -13,9 +13,9 @@
     <string name="use_js">Use JavaScript:</string>
     <string name="about_app_caption">About app:</string>
 
-    <string name="about_app">"Mango browser is a simple native Android browser based on Android WebView. \n
-        Actually it was developed to be a small pet project. \n\n
-        I am sure this app contains lots of bugs. You can see the source code of the Mango Browser here: "</string>
+    <string name="about_app">"Mango browser is a simple native Android browser based on Android WebView.
+    Actually it was developed to be a small pet project.
+    I am sure this app contains lots of bugs. You can see the source code of the Mango Browser here:"</string>
 
     <string name="add_site_to_favorites_list">Add site to favorites list:</string>
     <string name="site_name">Site name:</string>

@@ -26,17 +26,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/text_favorite_tab_name"
         android:background="@android:color/transparent"
-        app:tint="@color/orange" />
+        app:tint="?attr/colorPrimary" />
 
     <TextView
         android:id="@+id/text_favorite_tab_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textColor="?attr/colorOnPrimaryContainer"
         android:layout_marginStart="16dp"
         android:gravity="center"
         android:paddingHorizontal="8dp"
         android:paddingTop="8dp"
-        android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button_delete"
@@ -46,13 +46,13 @@
     <TextView
         android:id="@+id/text_favorite_tab_url"
         android:layout_width="0dp"
+        android:textColor="?attr/colorOnPrimaryContainer"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
         android:gravity="center"
         android:paddingHorizontal="8dp"
         android:paddingBottom="8dp"
-        android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button_delete"

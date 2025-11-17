@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/orange">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="?attr/colorPrimaryContainer">
 
     <ImageButton
         android:id="@+id/button_settings"
@@ -16,7 +17,7 @@
         android:src="@drawable/ic_settings"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/white" />
+        app:tint="?attr/colorOnPrimary" />
 
     <ImageButton
         android:id="@+id/button_opened_tabs"
@@ -28,7 +29,7 @@
         android:src="@drawable/ic_opened_tabs"
         app:layout_constraintEnd_toStartOf="@+id/button_home_page"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/white" />
+        app:tint="?attr/colorOnPrimary" />
 
     <ImageButton
         android:id="@+id/button_favorite_tabs"
@@ -40,7 +41,7 @@
         android:src="@drawable/ic_favorite_tabs"
         app:layout_constraintEnd_toStartOf="@+id/button_opened_tabs"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/white" />
+        app:tint="?attr/colorOnPrimary" />
 
     <ImageButton
         android:id="@+id/button_home_page"
@@ -52,7 +53,7 @@
         android:src="@drawable/ic_home_page"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/white" />
+        app:tint="?attr/colorOnPrimary" />
 
     <ImageButton
         android:id="@+id/button_search"
@@ -64,7 +65,7 @@
         android:src="@drawable/ic_search"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_settings"
-        app:tint="@color/white" />
+        app:tint="?attr/colorOnPrimary" />
 
     <ImageButton
         android:id="@+id/button_add_to_favorites"
@@ -76,7 +77,8 @@
         android:src="@drawable/ic_add_to_favorites"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_settings" />
+        app:layout_constraintTop_toBottomOf="@+id/button_settings"
+        app:tint="?attr/colorOnPrimary" />
 
     <ImageButton
         android:id="@+id/button_clear_edit_web_request"
@@ -89,7 +91,7 @@
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_settings"
-        app:tint="@color/white" />
+        app:tint="?attr/colorOnPrimary" />
 
     <EditText
         android:id="@+id/edit_web_request"
@@ -103,6 +105,7 @@
         android:inputType="textUri"
         android:padding="4dp"
         android:textSize="14sp"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toStartOf="@+id/button_search"
         app:layout_constraintStart_toEndOf="@+id/button_add_to_favorites"
         app:layout_constraintTop_toBottomOf="@+id/button_settings" />
@@ -125,10 +128,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/cannot_open_the_site"
-        android:textColor="@color/white"
+        android:textColor="?attr/colorOnPrimaryContainer"
         android:textSize="22sp"
         android:textStyle="bold"
         android:visibility="gone"
+        tools:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -140,9 +144,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/check_your_internet_connection"
-        android:textColor="@color/white"
+        android:textColor="?attr/colorOnPrimaryContainer"
         android:textSize="18sp"
         android:visibility="gone"
+        tools:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_web_error_header" />
@@ -152,16 +157,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:backgroundTint="@color/white"
+        android:backgroundTint="?attr/colorPrimary"
         android:padding="4dp"
         android:text="@string/try_again"
-        android:textColor="@color/orange"
+        android:textColor="?attr/colorOnPrimary"
         android:textSize="18sp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
+        tools:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <WebView
+        tools:visibility="gone"
         android:id="@+id/web_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"

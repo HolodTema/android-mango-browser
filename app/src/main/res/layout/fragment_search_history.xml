@@ -9,7 +9,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/orange"
+        android:background="?attr/colorPrimaryContainer"
         android:padding="8dp">
 
         <TextView
@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
             android:text="@string/search_history"
-            android:textColor="@color/white"
+            android:textColor="?attr/colorOnPrimaryContainer"
             android:textSize="20sp" />
 
         <ImageButton
@@ -29,7 +29,7 @@
             android:background="@android:color/transparent"
             android:contentDescription="@string/back"
             android:src="@drawable/ic_back"
-            app:tint="@color/white" />
+            app:tint="?attr/colorOnPrimaryContainer" />
 
     </FrameLayout>
 
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/text_amount_history_tabs"
             tools:text="Number of history tabs: 100"
-            android:textColor="@color/black"
+            android:textColor="?attr/colorOnSecondaryContainer"
             android:layout_weight="1"
             android:gravity="start"
             android:layout_marginEnd="8dp"
@@ -55,8 +55,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/button_clear_all_history"
             android:text="@string/clear_history"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/orange"
+            android:textColor="?attr/colorOnPrimary"
+            android:backgroundTint="?attr/colorPrimary"
             android:paddingVertical="0dp"
             android:paddingHorizontal="8dp"/>
     </LinearLayout>

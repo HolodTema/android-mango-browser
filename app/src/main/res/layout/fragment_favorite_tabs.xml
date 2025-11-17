@@ -8,7 +8,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/orange"
+        android:background="?attr/colorPrimaryContainer"
         android:padding="8dp">
 
         <TextView
@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
             android:text="@string/favorite_tabs"
-            android:textColor="@color/white"
+            android:textColor="?attr/colorOnPrimaryContainer"
             android:textSize="20sp" />
 
         <ImageButton
@@ -28,7 +28,7 @@
             android:background="@android:color/transparent"
             android:contentDescription="@string/back"
             android:src="@drawable/ic_back"
-            app:tint="@color/white" />
+            app:tint="?attr/colorOnPrimaryContainer" />
 
     </FrameLayout>
 
@@ -48,7 +48,7 @@
         android:gravity="center"
         android:padding="16dp"
         android:text="@string/there_are_no_favorite_tabs"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorOnSecondaryContainer"
         android:textSize="16sp"
         android:visibility="visible" />
 

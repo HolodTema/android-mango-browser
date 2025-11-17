@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorOnSecondaryContainer"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -37,7 +37,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/text_history_tab_date_time"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/text_history_tab_url"
-        app:tint="@color/orange" />
+        app:tint="?attr/colorPrimary" />
 
     <TextView
         android:layout_marginStart="16dp"
@@ -46,7 +46,7 @@
         android:id="@+id/text_history_tab_url"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
+        android:textColor="?attr/colorOnPrimaryContainer"
         android:textSize="14sp"
         android:paddingTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,11 +59,11 @@
         android:layout_marginEnd="8dp"
         android:id="@+id/text_history_tab_date_time"
         android:layout_width="0dp"
+        android:textColor="?attr/colorOnPrimaryContainer"
         android:paddingBottom="8dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:gravity="end"
-        android:textColor="@color/white"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button_delete_history_tab"

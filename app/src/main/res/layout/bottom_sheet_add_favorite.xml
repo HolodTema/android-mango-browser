@@ -16,14 +16,14 @@
         android:src="@drawable/ic_close_bottom_sheet"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/white" />
+        app:tint="?attr/colorOnPrimaryContainer" />
 
     <TextView
         android:id="@+id/text_caption_add_favorite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/add_site_to_favorites_list"
-        android:textColor="@color/white"
+        android:textColor="?attr/colorOnPrimaryContainer"
         android:textSize="20sp"
         android:gravity="center"
         app:layout_constraintTop_toTopOf="parent" />
@@ -33,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/site_name"
-        android:textColor="@color/white"
+        android:textColor="?attr/colorOnPrimaryContainer"
         android:textSize="16sp"
         android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,6 +50,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="4dp"
         android:textSize="16sp"
+        android:textColor="@color/black"
         tools:text="Site name"
         app:layout_constraintStart_toEndOf="@+id/text_caption_site_name"
         app:layout_constraintTop_toTopOf="@+id/text_caption_site_name" />
@@ -59,7 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/site_url"
-        android:textColor="@color/white"
+        android:textColor="?attr/colorOnPrimaryContainer"
         android:textSize="16sp"
         android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -69,8 +70,8 @@
         android:id="@+id/text_site_url"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
         android:textSize="16sp"
+        android:textColor="?attr/colorOnPrimaryContainer"
         app:layout_constraintTop_toBottomOf="@+id/text_caption_site_url"
         android:layout_marginTop="4dp"
         tools:text="https://translate.yandex.ru/"
@@ -80,11 +81,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:backgroundTint="@color/white"
+        android:backgroundTint="?attr/colorPrimary"
         android:text="@string/add"
         android:padding="0dp"
         android:id="@+id/button_add_to_favorites"
-        android:textColor="@color/orange"
+        android:textColor="?attr/colorOnPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_site_url" />
 

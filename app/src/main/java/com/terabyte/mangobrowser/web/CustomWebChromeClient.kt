@@ -14,7 +14,4 @@ class CustomWebChromeClient(
         super.onProgressChanged(view, newProgress)
         progressChangedListener(newProgress)
     }
-
-
-
 }
