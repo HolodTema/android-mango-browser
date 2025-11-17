@@ -51,6 +51,13 @@ class MainViewModel(private val dataStore: SettingsDataStore) : ViewModel() {
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
+            initialValue = true
+        )
+
+    val flowUseZoom: StateFlow<Boolean> = dataStore.flowUseZoom
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
             initialValue = false
         )
 
@@ -69,6 +76,12 @@ class MainViewModel(private val dataStore: SettingsDataStore) : ViewModel() {
     fun saveUseJS(useJS: Boolean) {
         viewModelScope.launch {
             dataStore.saveUseJS(useJS)
+        }
+    }
+
+    fun saveUseZoom(useZoom: Boolean) {
+        viewModelScope.launch {
+            dataStore.saveUseZoom(useZoom)
         }
     }
 

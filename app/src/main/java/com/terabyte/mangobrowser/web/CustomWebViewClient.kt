@@ -28,12 +28,15 @@ class CustomWebViewClient(
             isIntentUri(url) -> {
                 intentUriListener(url)
             }
+
             isDeepLink(url) -> {
                 deepLinkListener(url)
             }
+
             isSystemUri(url) -> {
                 systemUriListener(url)
             }
+
             else -> {
                 false
             }
@@ -42,11 +45,14 @@ class CustomWebViewClient(
 
     override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
         super.onPageStarted(view, url, favicon)
+        prepareSiteContextMenuFeature(view)
         pageStartedListener()
     }
 
     override fun onPageFinished(view: WebView?, url: String?) {
         super.onPageFinished(view, url)
+        enableClipboardPaste(view)
+        enableSiteContextMenu(view)
         pageFinishedListener(url)
     }
 
@@ -73,6 +79,117 @@ class CustomWebViewClient(
         val code = error.errorCode
         if (code == ERROR_TIMEOUT || code == ERROR_CONNECT || code == ERROR_HOST_LOOKUP) {
             noInternetListener(code)
+        }
+    }
+
+    private fun enableClipboardPaste(webView: WebView?) {
+        webView?.let {
+            val jsCodeToEnablePaste = """
+                try {
+                    // Разрешаем paste для всех элементов ввода
+                    document.addEventListener('paste', function(e) {
+                        e.stopPropagation();
+                    }, true);
+                    
+                    // Убираем ограничения на вставку
+                    const inputs = document.querySelectorAll('input, textarea, [contenteditable="true"]');
+                    inputs.forEach(input => {
+                        input.addEventListener('paste', function(e) {
+                            e.stopPropagation();
+                        });
+                    });
+                } catch(e) {
+                    console.log('Clipboard enable error: ' + e);
+                }
+            """.trimIndent()
+            it.evaluateJavascript(jsCodeToEnablePaste, null)
+        }
+    }
+
+    private fun prepareSiteContextMenuFeature(webView: WebView?) {
+        webView?.let {
+            val jsCodeToPrepareContextMenu = """
+            // Блокируем блокировку контекстного меню на ранней стадии
+            document.addEventListener('DOMContentLoaded', function() {
+                // Убираем все обработчики, которые блокируют contextmenu
+                document.removeEventListener('contextmenu', preventContextMenuHandlers);
+                
+                // Разрешаем выделение текста везде
+                const style = document.createElement('style');
+                style.textContent = `
+                    * {
+                        -webkit-user-select: text !important;
+                        user-select: text !important;
+                        -webkit-touch-callout: default !important;
+                    }
+                    input, textarea {
+                        -webkit-user-select: text !important;
+                        user-select: text !important;
+                    }
+                `;
+                document.head.appendChild(style);
+            });
+            
+            function preventContextMenuHandlers(e) {
+                e.stopPropagation();
+            }
+        """.trimIndent()
+
+            it.evaluateJavascript(jsCodeToPrepareContextMenu, null)
+        }
+    }
+
+    private fun enableSiteContextMenu(webView: WebView?) {
+        webView?.let {
+            val jsCodeToEnableContextMenu = """
+            // Полностью включаем контекстное меню
+            try {
+                // 1. Убираем все существующие блокировки contextmenu
+                const originalAddEventListener = EventTarget.prototype.addEventListener;
+                EventTarget.prototype.addEventListener = function(type, listener, options) {
+                    if (type === 'contextmenu' && listener && listener.toString().includes('preventDefault')) {
+                        console.log('Blocked contextmenu preventer');
+                        return;
+                    }
+                    originalAddEventListener.call(this, type, listener, options);
+                };
+                
+                // 2. Восстанавливаем стандартное поведение contextmenu
+                document.addEventListener('contextmenu', function(e) {
+                    // Разрешаем событию всплывать и выполняться стандартно
+                    return true;
+                }, true);
+                
+                // 3. Убираем CSS блокировки
+                const disableStyles = [
+                    '-webkit-touch-callout: none',
+                    '-webkit-user-select: none', 
+                    'user-select: none',
+                    'pointer-events: none'
+                ];
+                
+                disableStyles.forEach(styleRule => {
+                    const elements = document.querySelectorAll('[style*="' + styleRule + '"]');
+                    elements.forEach(el => {
+                        el.style.cssText = el.style.cssText.replace(new RegExp(styleRule, 'g'), '');
+                    });
+                });
+                
+                // 4. Разрешаем выделение для всех элементов
+                document.querySelectorAll('*').forEach(el => {
+                    el.style.webkitUserSelect = 'text';
+                    el.style.userSelect = 'text';
+                    el.style.webkitTouchCallout = 'default';
+                });
+                
+                console.log('Context menu fully enabled');
+                
+            } catch (error) {
+                console.log('Error enabling context menu: ' + error);
+            }
+        """.trimIndent()
+
+            it.evaluateJavascript(jsCodeToEnableContextMenu, null)
         }
     }
 

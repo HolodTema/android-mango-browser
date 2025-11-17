@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/colorPrimaryContainer"
@@ -42,42 +43,38 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:paddingTop="8dp"
+            android:paddingHorizontal="16dp"
             android:paddingBottom="16dp">
 
-            <TextView
-                android:id="@+id/text_caption_home_page"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/home_page"
-                android:textColor="?attr/colorOnSecondary"
-                android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="parent"
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:id="@+id/line_appearance"
+                android:background="@color/light_gray"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Spinner
-                android:id="@+id/spinner_home_page"
-                android:layout_width="0dp"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:textColor="?attr/colorOnSecondary"
-                app:layout_constraintBottom_toBottomOf="@+id/text_caption_home_page"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_caption_home_page"
-                app:layout_constraintTop_toTopOf="@+id/text_caption_home_page" />
+                android:id="@+id/text_caption_appearance"
+                android:text="@string/appearance"
+                app:layout_constraintTop_toTopOf="parent"
+                android:textColor="?attr/colorOnSecondaryContainer"
+                android:textSize="14sp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/text_caption_dark_theme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="8dp"
                 android:text="@string/dark_theme"
                 android:textColor="?attr/colorOnSecondary"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_caption_home_page" />
+                app:layout_constraintTop_toBottomOf="@+id/text_caption_appearance" />
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switch_dark_theme"
@@ -91,17 +88,58 @@
                 app:thumbTint="@color/selector_switch_thumb"
                 app:trackTint="@color/selector_switch_track" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:id="@+id/line_webview_settings"
+                android:background="@color/light_gray"
+                app:layout_constraintTop_toBottomOf="@id/switch_dark_theme" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/text_caption_webview_settings"
+                android:text="@string/webview_settings"
+                app:layout_constraintTop_toBottomOf="@id/line_webview_settings"
+                android:textColor="?attr/colorOnSecondaryContainer"
+                android:layout_marginTop="8dp"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent" />
+
+
+            <TextView
+                android:id="@+id/text_caption_home_page"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/home_page"
+                android:textColor="?attr/colorOnSecondary"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_caption_webview_settings" />
+
+            <Spinner
+                android:id="@+id/spinner_home_page"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:textColor="?attr/colorOnSecondary"
+                app:layout_constraintBottom_toBottomOf="@+id/text_caption_home_page"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/text_caption_home_page"
+                app:layout_constraintTop_toTopOf="@+id/text_caption_home_page" />
+
             <TextView
                 android:id="@+id/text_caption_use_js"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="24dp"
                 android:text="@string/use_js"
                 android:textColor="?attr/colorOnSecondary"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_caption_dark_theme" />
+                app:layout_constraintTop_toBottomOf="@+id/spinner_home_page" />
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switch_use_js"
@@ -115,29 +153,90 @@
                 app:trackTint="@color/selector_switch_track" />
 
             <TextView
+                android:id="@+id/text_caption_use_zoom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/use_zoom"
+                android:textColor="?attr/colorOnSecondary"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/switch_use_js" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switch_use_zoom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/text_caption_use_zoom"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/text_caption_use_zoom"
+                app:thumbTint="@color/selector_switch_thumb"
+                app:trackTint="@color/selector_switch_track" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:id="@+id/line_about_app"
+                android:background="@color/light_gray"
+                app:layout_constraintTop_toBottomOf="@+id/switch_use_zoom"
+                android:layout_marginTop="16dp" />
+
+            <TextView
                 android:id="@+id/text_caption_about_app"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="4dp"
                 android:text="@string/about_app_caption"
                 android:textColor="?attr/colorOnSecondary"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_caption_use_js" />
+                app:layout_constraintTop_toBottomOf="@+id/line_about_app" />
 
             <TextView
                 android:id="@+id/text_about_app"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autoLink="web"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
                 android:text="@string/about_app"
                 android:textColor="?attr/colorOnSecondary"
                 android:textSize="14sp"
                 app:layout_constraintTop_toBottomOf="@+id/text_caption_about_app" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="64dp"
+                android:background="@android:color/transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:elevation="0dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@android:color/transparent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_about_app">
+
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+
+                    android:src="@mipmap/ic_launcher" />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/text_app_version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView"
+                android:layout_marginTop="8dp"
+                android:textColor="?attr/colorOnSecondaryContainer"
+                tools:text="version 1.0" />
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

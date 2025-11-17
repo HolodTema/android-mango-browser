@@ -10,8 +10,8 @@
     <string name="check_your_internet_connection">Check your Internet connection…</string>
     <string name="home_page">Home page:</string>
     <string name="dark_theme">Dark theme:</string>
-    <string name="use_js">Use JavaScript:</string>
-    <string name="about_app_caption">About app:</string>
+    <string name="use_js">Use JavaScript (recommended):</string>
+    <string name="about_app_caption">about app:</string>
 
     <string name="about_app">"Mango browser is a simple native Android browser based on Android WebView.
 Actually it was developed to be a small pet project.
@@ -34,4 +34,15 @@ https://github.com/HolodTema/android-mango-browser"</string>
     <string name="incognito_mode">Incognito mode</string>
     <string name="welcome_to_incognito_mode">Welcome to Incognito mode!</string>
     <string name="about_incognito_mode">You can surf the Internet more privately:\n\n\nMango won\'t save:\n\n* cookies and site data\n* search history\n* information entered in forms\n\nBut your actions might be visible to your Internet provider or system administrator.\n\nDark UI theme for dark intentions…</string>
+    <string name="appearance">appearance</string>
+    <string name="webview_settings">WebView settings</string>
+    <string name="use_zoom">Use zoom controls:</string>
+    <string name="version">Version %s</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="files">Files</string>
+    <string name="choose_file_source">Choose file source:</string>
+    <string name="cancel">Cancel</string>
+    <string name="select_file">Select file:</string>
+    <string name="select_image">Select image:</string>
 </resources>

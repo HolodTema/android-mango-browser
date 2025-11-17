@@ -1,8 +1,11 @@
 package com.terabyte.mangobrowser.ui.fragment
 
+import android.Manifest
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
@@ -13,16 +16,27 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.webkit.ValueCallback
+import android.webkit.WebChromeClient
+import android.webkit.WebChromeClient.FileChooserParams
 import android.webkit.WebSettings
 import android.widget.PopupMenu
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts.RequestMultiplePermissions
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.terabyte.mangobrowser.R
 import com.terabyte.mangobrowser.activity.IncognitoActivity
+import com.terabyte.mangobrowser.activity.contract.CameraActivityContract
+import com.terabyte.mangobrowser.activity.contract.FileManagerActivityContract
+import com.terabyte.mangobrowser.activity.contract.GalleryActivityContract
 import com.terabyte.mangobrowser.databinding.FragmentWebBinding
 import com.terabyte.mangobrowser.datastore.SettingsDataStore
 import com.terabyte.mangobrowser.ui.dialog.AddFavoriteBottomSheet
+import com.terabyte.mangobrowser.util.checkAllPermissionsGranted
+import com.terabyte.mangobrowser.util.checkCameraPermission
+import com.terabyte.mangobrowser.util.getFileUploadingPermissionsList
 import com.terabyte.mangobrowser.viewmodel.MainViewModel
 import com.terabyte.mangobrowser.web.CustomWebChromeClient
 import com.terabyte.mangobrowser.web.CustomWebViewClient
@@ -35,6 +49,48 @@ class WebFragment : Fragment() {
     private val viewModel: MainViewModel by lazy {
         val factory = MainViewModel.Factory(SettingsDataStore(requireActivity()))
         ViewModelProvider(requireActivity(), factory)[MainViewModel::class.java]
+    }
+
+    private var filePathCallback: ValueCallback<Array<Uri>>? = null
+    private var uriCameraImage: Uri? = null
+
+    private var fileChooserParams: FileChooserParams? = null
+
+    private val fileManagerActivityLauncher =
+        registerForActivityResult(FileManagerActivityContract()) { arrayUri ->
+            filePathCallback?.onReceiveValue(arrayUri)
+            filePathCallback = null
+            uriCameraImage = null
+        }
+
+    private val galleryActivityLauncher =
+        registerForActivityResult(GalleryActivityContract()) { arrayUri ->
+            filePathCallback?.onReceiveValue(arrayUri)
+            filePathCallback = null
+            uriCameraImage = null
+        }
+
+    private val cameraActivityLauncher =
+        registerForActivityResult(CameraActivityContract()) { arrayUri ->
+            filePathCallback?.onReceiveValue(arrayUri)
+            filePathCallback = null
+            uriCameraImage = null
+        }
+
+    private val permissionsActivityLauncher = registerForActivityResult(RequestMultiplePermissions()) { permissions ->
+        val isAllGranted = permissions.values.all { it }
+        if (isAllGranted) {
+            onShowFileChooserDialog(fileChooserParams)
+        }
+        else {
+            Toast.makeText(requireContext(), "Grant all permissions to upload files!", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        permissionsActivityLauncher
     }
 
     override fun onCreateView(
@@ -185,30 +241,79 @@ class WebFragment : Fragment() {
         )
 
         val webChromeClient = CustomWebChromeClient(
+            filePathCallback = filePathCallback,
             progressChangedListener = {
                 binding.progressWebLoading.progress = it
-            }
+            },
+            fileChooserDialogListener = ::onShowFileChooser
         )
+
+        binding.webView.settings.apply {
+            loadsImagesAutomatically = true
+            cacheMode = WebSettings.LOAD_DEFAULT
+            useWideViewPort = true
+            loadWithOverviewMode = true
+            setSupportMultipleWindows(true)
+            displayZoomControls = false
+            domStorageEnabled = true
+            userAgentString = "Mozilla/5.0 (Linux; Android 10; " +
+                    Build.MODEL + ") AppleWebKit/537.36 (KHTML, like Gecko) " +
+                    "Chrome/91.0.4472.120 Mobile Safari/537.36"
+
+            //javascript support from DataStore
+            javaScriptEnabled = viewModel.flowUseJS.value
+            javaScriptCanOpenWindowsAutomatically = viewModel.flowUseJS.value
+
+            //for file uploading
+            allowFileAccess = true
+            allowUniversalAccessFromFileURLs = true
+            allowFileAccessFromFileURLs = true
+            allowContentAccess = true
+
+            //zoom controls from DataStore
+            if (viewModel.flowUseZoom.value) {
+                builtInZoomControls = true
+                setSupportZoom(true)
+            } else {
+                builtInZoomControls = false
+                setSupportZoom(false)
+            }
+        }
+
+        
+        //support light/dark UI theme inside WebView
+        val isDarkTheme = viewModel.flowDarkTheme.value
+        val cssCodeUITheme = if (isDarkTheme) {
+            """
+            @media (prefers-color-scheme: dark) {
+                :root { color-scheme: dark; }
+            }
+            html { filter: invert(1) hue-rotate(180deg); }
+            img, video { filter: invert(1) hue-rotate(180deg); }
+        """
+        }
+        else {
+            """
+            @media (prefers-color-scheme: light) {
+                :root { color-scheme: light; }
+            }
+            html { filter: invert(1) hue-rotate(180deg); }
+            img, video { filter: invert(1) hue-rotate(180deg); }
+        """
+        }
+        binding.webView.evaluateJavascript("injectCSS('$cssCodeUITheme')", null)
+
 
         binding.webView.apply {
             this.webViewClient = webViewClient
             this.webChromeClient = webChromeClient
+
             scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
 
-            settings.javaScriptEnabled = viewModel.flowUseJS.value
-
-            settings.loadsImagesAutomatically = true
-            settings.cacheMode = WebSettings.LOAD_DEFAULT
-            settings.useWideViewPort = true
-            settings.loadWithOverviewMode = true
-            settings.displayZoomControls = false
-            settings.builtInZoomControls = true
-            settings.setSupportZoom(true)
-            settings.domStorageEnabled = true
-
-            settings.userAgentString = "Mozilla/5.0 (Linux; Android 10; " +
-                    Build.MODEL + ") AppleWebKit/537.36 (KHTML, like Gecko) " +
-                    "Chrome/91.0.4472.120 Mobile Safari/537.36"
+            //allow clipboard inside WebView
+            isFocusable = true
+            isFocusableInTouchMode = true
+            isLongClickable = true
 
             loadUrl(viewModel.liveDataCurrentWebUrl.value ?: viewModel.flowHomePage.value)
         }
@@ -275,7 +380,6 @@ class WebFragment : Fragment() {
         startActivity(Intent(requireActivity(), IncognitoActivity::class.java))
     }
 
-
     private fun hideKeyboard() {
         val inputMethodManager = requireContext()
             .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -313,13 +417,66 @@ class WebFragment : Fragment() {
             if (resolvedActivity != null) {
                 startActivity(intent)
                 true
-            }
-            else {
+            } else {
                 false
             }
         } catch (e: Exception) {
             false
         }
+    }
+
+    private fun onShowFileChooser(params: FileChooserParams?) {
+        val permissions = getFileUploadingPermissionsList()
+        if (requireContext().checkAllPermissionsGranted(permissions)) {
+            onShowFileChooserDialog(params)
+        } else {
+            permissionsActivityLauncher.launch(permissions)
+        }
+    }
+
+    private fun onShowFileChooserDialog(params: FileChooserParams?) {
+        val dialogOptions = arrayOf(
+            getString(R.string.camera),
+            getString(R.string.gallery),
+            getString(R.string.files)
+        )
+
+        AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.choose_file_source))
+            .setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
+                filePathCallback?.onReceiveValue(null)
+                filePathCallback = null
+                fileChooserParams = null
+                dialog.dismiss()
+            }
+            .setItems(dialogOptions) { _, itemIndex ->
+                when (itemIndex) {
+                    0 -> {
+                        openCamera()
+                    }
+
+                    1 -> {
+                        openGallery(params)
+                    }
+
+                    2 -> {
+                        openFileManager(params)
+                    }
+                }
+            }
+            .show()
+    }
+
+    private fun openFileManager(params: FileChooserParams?) {
+        fileManagerActivityLauncher.launch(params)
+    }
+
+    private fun openGallery(params: FileChooserParams?) {
+        galleryActivityLauncher.launch(params)
+    }
+
+    private fun openCamera() {
+        cameraActivityLauncher.launch(Unit)
     }
 
     companion object {
