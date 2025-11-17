@@ -83,7 +83,7 @@
         android:layout_marginTop="16dp"
         android:backgroundTint="?attr/colorPrimary"
         android:text="@string/add"
-        android:padding="0dp"
+        android:padding="4dp"
         android:id="@+id/button_add_to_favorites"
         android:textColor="?attr/colorOnPrimary"
         app:layout_constraintEnd_toEndOf="parent"
