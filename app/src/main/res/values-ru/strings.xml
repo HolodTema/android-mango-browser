@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mango Browser</string>
+    <string name="settings">Настройки</string>
+    <string name="add_new_tab">Добавить новую вкладку</string>
+    <string name="back">Назад</string>
+    <string name="search_history">История поиска</string>
+    <string name="favorite_tabs">Избранное</string>
+    <string name="try_again">Попробовать снова</string>
+    <string name="cannot_open_the_site">Невозможно загрузить сайт</string>
+    <string name="check_your_internet_connection">Проверьте соединение с Интернетом…</string>
+    <string name="home_page">Домашняя страница:</string>
+    <string name="dark_theme">Темная тема:</string>
+    <string name="use_js">Использовать JavaScript:</string>
+    <string name="about_app_caption">О приложении:</string>
+
+
+    <string name="about_app">"Mango browser - простой нативный браузер для Android, использующий сервис Android WebView.
+Это приложение было разработано как небольшой пет-проект.
+Я уверен, это приложение содержит множество ошибок. Вы можете посмотреть исходный код приложения здесь:
+
+https://github.com/HolodTema/android-mango-browser"</string>
+
+    <string name="add_site_to_favorites_list">Добавить сайт в Избранное:</string>
+    <string name="site_name">Название:</string>
+    <string name="site_url">Адрес:</string>
+    <string name="add">Добавить</string>
+    <string name="there_are_no_favorite_tabs">Здесь пока что пусто…</string>
+    <string name="clear_history">Очистить историю</string>
+    <string name="amount_history_tabs">Количество записей: %d</string>
+</resources>
