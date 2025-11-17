@@ -32,4 +32,6 @@ https://github.com/HolodTema/android-mango-browser"</string>
     <string name="enter_url_address">Enter url address</string>
     <string name="close">close</string>
     <string name="incognito_mode">Incognito mode</string>
+    <string name="welcome_to_incognito_mode">Welcome to Incognito mode!</string>
+    <string name="about_incognito_mode">You can surf the Internet more privately:\n\n\nMango won\'t save:\n\n* cookies and site data\n* search history\n* information entered in forms\n\nBut your actions might be visible to your Internet provider or system administrator.\n\nDark UI theme for dark intentions…</string>
 </resources>
