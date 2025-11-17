@@ -19,6 +19,7 @@ import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.terabyte.mangobrowser.R
+import com.terabyte.mangobrowser.activity.IncognitoActivity
 import com.terabyte.mangobrowser.databinding.FragmentWebBinding
 import com.terabyte.mangobrowser.datastore.SettingsDataStore
 import com.terabyte.mangobrowser.ui.dialog.AddFavoriteBottomSheet
@@ -240,6 +241,10 @@ class WebFragment : Fragment() {
                 R.id.menu_item_share_page -> {
                     onButtonSharePagePressed()
                 }
+
+                R.id.menu_item_incognito_mode -> {
+                    onButtonIncognitoModePressed()
+                }
             }
             true
         }
@@ -265,6 +270,11 @@ class WebFragment : Fragment() {
             startActivity(intentChooser)
         }
     }
+
+    private fun onButtonIncognitoModePressed() {
+        startActivity(Intent(requireActivity(), IncognitoActivity::class.java))
+    }
+
 
     private fun hideKeyboard() {
         val inputMethodManager = requireContext()

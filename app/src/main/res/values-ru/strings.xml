@@ -32,4 +32,6 @@ https://github.com/HolodTema/android-mango-browser"</string>
     <string name="share">Поделиться</string>
     <string name="share_page_url">Поделиться ссылкой на страницу</string>
     <string name="enter_url_address">Введите адрес сайта</string>
+    <string name="close">закрыть</string>
+    <string name="incognito_mode">Режим инкогнито</string>
 </resources>

@@ -13,4 +13,8 @@
         android:iconTint="?attr/colorOnSecondaryContainer"
         android:icon="@drawable/ic_share" />
 
+    <item
+        android:id="@+id/menu_item_incognito_mode"
+        android:title="@string/incognito_mode" />
+
 </menu>

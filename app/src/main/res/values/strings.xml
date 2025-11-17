@@ -30,4 +30,6 @@ https://github.com/HolodTema/android-mango-browser"</string>
     <string name="share">share</string>
     <string name="share_page_url">Share page URL</string>
     <string name="enter_url_address">Enter url address</string>
+    <string name="close">close</string>
+    <string name="incognito_mode">Incognito mode</string>
 </resources>

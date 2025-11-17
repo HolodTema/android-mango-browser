@@ -25,6 +25,11 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".activity.IncognitoActivity"
+            android:configChanges="orientation|screenSize"
+            android:exported="false" />
+
     </application>
 
 </manifest>
