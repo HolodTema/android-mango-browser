@@ -26,4 +26,7 @@ https://github.com/HolodTema/android-mango-browser"</string>
     <string name="there_are_no_favorite_tabs">There are no favorite tabs</string>
     <string name="clear_history">Clear history</string>
     <string name="amount_history_tabs">Amount entries in history: %d</string>
+    <string name="reload_page">reload page</string>
+    <string name="share">share</string>
+    <string name="share_page_url">Share page URL</string>
 </resources>

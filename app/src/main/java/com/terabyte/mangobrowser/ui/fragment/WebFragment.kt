@@ -1,13 +1,17 @@
 package com.terabyte.mangobrowser.ui.fragment
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebSettings
+import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.terabyte.mangobrowser.R
@@ -17,6 +21,7 @@ import com.terabyte.mangobrowser.ui.dialog.AddFavoriteBottomSheet
 import com.terabyte.mangobrowser.viewmodel.MainViewModel
 import com.terabyte.mangobrowser.web.CustomWebChromeClient
 import com.terabyte.mangobrowser.web.CustomWebViewClient
+
 
 class WebFragment : Fragment() {
     private lateinit var binding: FragmentWebBinding
@@ -108,6 +113,10 @@ class WebFragment : Fragment() {
             bottomSheet.show(requireActivity().supportFragmentManager, AddFavoriteBottomSheet.FRAGMENT_TAG)
         }
 
+        binding.buttonMore.setOnClickListener {
+            showPopupMenu()
+        }
+
         viewModel.liveDataCurrentWebUrl.observe(viewLifecycleOwner) {
             binding.editWebRequest.setText(it)
             viewModel.checkCurrentUrlInFavorites {
@@ -189,6 +198,41 @@ class WebFragment : Fragment() {
         binding.textWebErrorHeader.visibility = View.GONE
         binding.textWebErrorDescription.visibility = View.GONE
         binding.buttonErrorConnectAgain.visibility = View.GONE
+    }
+
+    private fun showPopupMenu() {
+        val popupMenu = PopupMenu(requireActivity(), binding.buttonMore)
+        popupMenu.menuInflater.inflate(R.menu.menu_web_fragment_more, popupMenu.menu)
+
+        popupMenu.setOnMenuItemClickListener{ menuItem: MenuItem ->
+            when(menuItem.itemId) {
+                R.id.menu_item_reload_page -> {
+                    onButtonReloadPagePressed()
+                }
+                R.id.menu_item_share_page -> {
+                    onButtonSharePagePressed()
+                }
+            }
+            true
+        }
+
+        popupMenu.show()
+    }
+
+    private fun onButtonReloadPagePressed() {
+        binding.webView.loadUrl(viewModel.liveDataCurrentWebUrl.value ?: viewModel.flowHomePage.value)
+    }
+
+    private fun onButtonSharePagePressed() {
+        val url = viewModel.liveDataCurrentWebUrl.value
+        if (url != null && url.isNotBlank()) {
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/plain"
+            intent.putExtra(Intent.EXTRA_TEXT, viewModel.liveDataCurrentWebUrl.value)
+
+            val intentChooser = Intent.createChooser(intent, getString(R.string.share_page_url))
+            startActivity(intentChooser)
+        }
     }
 
     companion object {

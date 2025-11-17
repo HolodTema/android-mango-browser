@@ -28,4 +28,7 @@ https://github.com/HolodTema/android-mango-browser"</string>
     <string name="there_are_no_favorite_tabs">Здесь пока что пусто…</string>
     <string name="clear_history">Очистить историю</string>
     <string name="amount_history_tabs">Количество записей: %d</string>
+    <string name="reload_page">Перезагрузить</string>
+    <string name="share">Поделиться</string>
+    <string name="share_page_url">Поделиться ссылкой на страницу</string>
 </resources>

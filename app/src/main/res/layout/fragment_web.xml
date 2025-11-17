@@ -44,14 +44,26 @@
         app:tint="?attr/colorOnPrimary" />
 
     <ImageButton
+    android:id="@+id/button_more"
+    android:layout_width="30dp"
+    android:layout_height="30dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="8dp"
+    android:background="@android:color/transparent"
+    android:src="@drawable/ic_more"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:tint="?attr/colorOnPrimary" />
+
+    <ImageButton
         android:id="@+id/button_home_page"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="32dp"
         android:background="@android:color/transparent"
         android:src="@drawable/ic_home_page"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/button_more"
         app:layout_constraintTop_toTopOf="parent"
         app:tint="?attr/colorOnPrimary" />
 
@@ -152,7 +164,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_web_error_header" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_error_connect_again"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -161,7 +173,6 @@
         android:padding="4dp"
         android:text="@string/try_again"
         android:textColor="?attr/colorOnPrimary"
-        android:textSize="18sp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:visibility="visible"

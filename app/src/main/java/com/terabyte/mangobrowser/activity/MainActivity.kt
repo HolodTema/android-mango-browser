@@ -1,6 +1,7 @@
 package com.terabyte.mangobrowser.activity
 
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         configureLightDarkTheme()
+        configureOnBackPressedCallback()
 
         viewModel.liveDataCurrentFragmentLayout.observe(this) { layoutId ->
             val currentFragment =
@@ -56,33 +58,43 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            if (currentFragment == null) {
-                supportFragmentManager
-                    .beginTransaction()
-                    .add(R.id.frame_main_fragment_container, fragmentToSet)
-                    .commit()
-            } else {
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.frame_main_fragment_container, fragmentToSet)
-                    .commit()
-            }
+            val isInBackStack = layoutId != R.layout.fragment_web
 
+            val transaction = supportFragmentManager.beginTransaction()
+            if (currentFragment == null) {
+                transaction.add(R.id.frame_main_fragment_container, fragmentToSet)
+            } else {
+                transaction.replace(R.id.frame_main_fragment_container, fragmentToSet)
+                if (isInBackStack) {
+                    transaction.addToBackStack(null)
+                }
+            }
+            transaction.commit()
         }
     }
 
     private fun configureLightDarkTheme() {
         lifecycleScope.launch {
             viewModel.flowDarkTheme.collect { isDarkTheme ->
-                val themeMode = if(isDarkTheme) {
+                val themeMode = if (isDarkTheme) {
                     AppCompatDelegate.MODE_NIGHT_YES
-                }
-                else {
+                } else {
                     AppCompatDelegate.MODE_NIGHT_NO
                 }
                 AppCompatDelegate.setDefaultNightMode(themeMode)
             }
         }
+    }
+
+    private fun configureOnBackPressedCallback() {
+        val onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (viewModel.liveDataCurrentFragmentLayout.value == R.layout.fragment_web) {
+                    finish()
+                }
+            }
+        }
+        onBackPressedDispatcher.addCallback(onBackPressedCallback)
     }
 
 
