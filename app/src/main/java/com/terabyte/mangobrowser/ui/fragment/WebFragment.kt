@@ -1,5 +1,6 @@
 package com.terabyte.mangobrowser.ui.fragment
 
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -9,9 +10,10 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.webkit.WebSettings
 import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.terabyte.mangobrowser.R
@@ -100,6 +102,16 @@ class WebFragment : Fragment() {
                 binding.buttonClearEditWebRequest.visibility = View.GONE
             }
         }
+        binding.editWebRequest.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEARCH) {
+                hideKeyboard()
+                val url = binding.editWebRequest.text.toString()
+                binding.webView.loadUrl(url)
+                true
+            } else {
+                false
+            }
+        }
 
         binding.buttonHomePage.setOnClickListener {
             binding.webView.loadUrl(viewModel.flowHomePage.value)
@@ -110,7 +122,10 @@ class WebFragment : Fragment() {
             bottomSheet.setFavoriteTabAddedListener {
                 binding.buttonAddToFavorites.isEnabled = false
             }
-            bottomSheet.show(requireActivity().supportFragmentManager, AddFavoriteBottomSheet.FRAGMENT_TAG)
+            bottomSheet.show(
+                requireActivity().supportFragmentManager,
+                AddFavoriteBottomSheet.FRAGMENT_TAG
+            )
         }
 
         binding.buttonMore.setOnClickListener {
@@ -204,11 +219,12 @@ class WebFragment : Fragment() {
         val popupMenu = PopupMenu(requireActivity(), binding.buttonMore)
         popupMenu.menuInflater.inflate(R.menu.menu_web_fragment_more, popupMenu.menu)
 
-        popupMenu.setOnMenuItemClickListener{ menuItem: MenuItem ->
-            when(menuItem.itemId) {
+        popupMenu.setOnMenuItemClickListener { menuItem: MenuItem ->
+            when (menuItem.itemId) {
                 R.id.menu_item_reload_page -> {
                     onButtonReloadPagePressed()
                 }
+
                 R.id.menu_item_share_page -> {
                     onButtonSharePagePressed()
                 }
@@ -220,7 +236,9 @@ class WebFragment : Fragment() {
     }
 
     private fun onButtonReloadPagePressed() {
-        binding.webView.loadUrl(viewModel.liveDataCurrentWebUrl.value ?: viewModel.flowHomePage.value)
+        binding.webView.loadUrl(
+            viewModel.liveDataCurrentWebUrl.value ?: viewModel.flowHomePage.value
+        )
     }
 
     private fun onButtonSharePagePressed() {
@@ -233,6 +251,12 @@ class WebFragment : Fragment() {
             val intentChooser = Intent.createChooser(intent, getString(R.string.share_page_url))
             startActivity(intentChooser)
         }
+    }
+
+    private fun hideKeyboard() {
+        val inputMethodManager = requireContext()
+            .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(binding.editWebRequest.windowToken, 0)
     }
 
     companion object {
