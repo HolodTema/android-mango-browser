@@ -31,4 +31,5 @@ https://github.com/HolodTema/android-mango-browser"</string>
     <string name="reload_page">Перезагрузить</string>
     <string name="share">Поделиться</string>
     <string name="share_page_url">Поделиться ссылкой на страницу</string>
+    <string name="enter_url_address">Введите адрес сайта</string>
 </resources>

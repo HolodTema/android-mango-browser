@@ -25,6 +25,7 @@ import com.terabyte.mangobrowser.ui.dialog.AddFavoriteBottomSheet
 import com.terabyte.mangobrowser.viewmodel.MainViewModel
 import com.terabyte.mangobrowser.web.CustomWebChromeClient
 import com.terabyte.mangobrowser.web.CustomWebViewClient
+import com.terabyte.mangobrowser.web.addProtocolNameIfNecessary
 
 
 class WebFragment : Fragment() {
@@ -63,8 +64,11 @@ class WebFragment : Fragment() {
 
         binding.buttonSearch.setOnClickListener {
             val url = binding.editWebRequest.text.toString()
+
             if (viewModel.liveDataCurrentWebUrl.value != url) {
-                binding.webView.loadUrl(url)
+                hideNoInternetUI()
+                val urlWithProtocolName = addProtocolNameIfNecessary(url)
+                binding.webView.loadUrl(urlWithProtocolName)
             }
         }
 
@@ -107,8 +111,10 @@ class WebFragment : Fragment() {
         binding.editWebRequest.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEARCH) {
                 hideKeyboard()
+                hideNoInternetUI()
                 val url = binding.editWebRequest.text.toString()
-                binding.webView.loadUrl(url)
+                val urlWithProtocolName = addProtocolNameIfNecessary(url)
+                binding.webView.loadUrl(urlWithProtocolName)
                 true
             } else {
                 false
@@ -116,6 +122,7 @@ class WebFragment : Fragment() {
         }
 
         binding.buttonHomePage.setOnClickListener {
+            hideNoInternetUI()
             binding.webView.loadUrl(viewModel.flowHomePage.value)
         }
 
@@ -241,6 +248,7 @@ class WebFragment : Fragment() {
     }
 
     private fun onButtonReloadPagePressed() {
+        hideNoInternetUI()
         binding.webView.loadUrl(
             viewModel.liveDataCurrentWebUrl.value ?: viewModel.flowHomePage.value
         )
