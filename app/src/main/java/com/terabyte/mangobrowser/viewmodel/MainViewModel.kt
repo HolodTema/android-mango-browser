@@ -137,7 +137,7 @@ class MainViewModel(private val dataStore: SettingsDataStore) : ViewModel() {
 
     private fun loadHistoryTabs() {
         viewModelScope.launch(Dispatchers.IO) {
-            val historyTabs = RoomHelper.get().getAllHistoryTabs().sorted()
+            val historyTabs = RoomHelper.get().getAllHistoryTabs().sorted().reversed()
             withContext(Dispatchers.Main) {
                 _liveDataHistoryTabs.value = historyTabs
             }

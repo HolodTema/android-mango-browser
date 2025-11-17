@@ -12,11 +12,32 @@ import com.terabyte.mangobrowser.LOG_TAG_DEBUG
 class CustomWebViewClient(
     private val pageStartedListener: () -> Unit,
     private val pageFinishedListener: (String?) -> Unit,
-    private val noInternetListener: (Int) -> Unit
+    private val noInternetListener: (Int) -> Unit,
+    private val intentUriListener: (String) -> Boolean,
+    private val systemUriListener: (String) -> Boolean,
+    private val deepLinkListener: (String) -> Boolean
 ) : WebViewClient() {
 
     override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
-        return false
+        val url = request?.url?.toString()
+        if (url == null) {
+            return false
+        }
+
+        return when {
+            isIntentUri(url) -> {
+                intentUriListener(url)
+            }
+            isDeepLink(url) -> {
+                deepLinkListener(url)
+            }
+            isSystemUri(url) -> {
+                systemUriListener(url)
+            }
+            else -> {
+                false
+            }
+        }
     }
 
     override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
