@@ -33,6 +33,11 @@ class SettingsDataStore(private val context: Context) {
             preferences[KEY_USE_ZOOM] ?: false
         }
 
+    val flowIsFirstLaunch: Flow<Boolean> = context.dataStore.data
+        .map { preferences ->
+            preferences[KEY_IS_FIRST_LAUNCH] ?: false
+        }
+
     suspend fun saveHomePage(homePageUrl: String) {
         context.dataStore.edit { preferences ->
             preferences[KEY_HOME_PAGE] = homePageUrl
@@ -57,6 +62,12 @@ class SettingsDataStore(private val context: Context) {
         }
     }
 
+    suspend fun saveIsFirstLaunch(isFirstLaunch: Boolean) {
+        context.dataStore.edit { preferences ->
+            preferences[KEY_IS_FIRST_LAUNCH] = isFirstLaunch
+        }
+    }
+
     companion object {
         private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
@@ -64,5 +75,6 @@ class SettingsDataStore(private val context: Context) {
         private val KEY_DARK_THEME = booleanPreferencesKey("key_dark_theme")
         private val KEY_USE_JS = booleanPreferencesKey("key_use_js")
         private val KEY_USE_ZOOM = booleanPreferencesKey("key_use_zoom")
+        private val KEY_IS_FIRST_LAUNCH = booleanPreferencesKey("key_is_first_launch")
     }
 }
